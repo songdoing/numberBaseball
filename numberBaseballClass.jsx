@@ -38,11 +38,18 @@ class NumberBaseball extends Component {
             </form>
             <div>TRY : {this.state.tries.length}</div>
             <ul>
-                {['apple', 'banana', 'cat', 'dog', 'egg'].map((v)=>{
+                {[
+                    { fruit : 'apple', color : 'red'},
+                    { fruit : 'banana', color : 'yellow'},
+                    { fruit : 'grape', color : 'purple'},
+                    { fruit : 'watermelon', color : 'green'},
+                    { fruit : 'mango', color : 'orange'},
+                    { fruit : 'tomato', color : 'redish'},
+                ].map((v)=>{
                     return (
-                        <li>{v}</li>
+                        <li key={v.fruit + v.color}><b>{v.fruit}</b> : {v.color}</li>
                     );
-                })}
+                })}               
             </ul>
             </>
         );
