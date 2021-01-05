@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 //get numbers without duplication
 function getNumbers() {
 
-}
+};
 
 class NumberBaseball extends Component {
     state = {
@@ -38,7 +38,11 @@ class NumberBaseball extends Component {
             </form>
             <div>TRY : {this.state.tries.length}</div>
             <ul>
-                <li />
+                {['apple', 'banana', 'cat', 'dog', 'egg'].map((v)=>{
+                    return (
+                        <li>{v}</li>
+                    );
+                })}
             </ul>
             </>
         );
