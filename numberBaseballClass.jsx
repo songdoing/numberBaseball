@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Try from './try';
 
 //get numbers without duplication
 function getNumbers() {
@@ -27,6 +28,15 @@ class NumberBaseball extends Component {
         this.input = c;
     };
 
+    fruits = [
+        { fruit : 'apple', color : 'red'},
+        { fruit : 'banana', color : 'yellow'},
+        { fruit : 'grape', color : 'purple'},
+        { fruit : 'watermelon', color : 'green'},
+        { fruit : 'mango', color : 'orange'},
+        { fruit : 'tomato', color : 'redish'},
+    ];
+
     render() {
         return (
             <>
@@ -38,18 +48,9 @@ class NumberBaseball extends Component {
             </form>
             <div>TRY : {this.state.tries.length}</div>
             <ul>
-                {[
-                    { fruit : 'apple', color : 'red'},
-                    { fruit : 'banana', color : 'yellow'},
-                    { fruit : 'grape', color : 'purple'},
-                    { fruit : 'watermelon', color : 'green'},
-                    { fruit : 'mango', color : 'orange'},
-                    { fruit : 'tomato', color : 'redish'},
-                ].map((v , i)=>(
-                        <li key={v.fruit + i}><b>{i+1}.{v.fruit}</b> : {v.color}</li>
-                        )
-                    )
-                }               
+                {this.fruits.map((v , i)=>(
+                    <Try key={v.fruit + v.color} value={v} index={i} />
+                ))}               
             </ul>
             </>
         );
