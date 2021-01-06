@@ -45,11 +45,11 @@ class NumberBaseball extends Component {
                     { fruit : 'watermelon', color : 'green'},
                     { fruit : 'mango', color : 'orange'},
                     { fruit : 'tomato', color : 'redish'},
-                ].map((v)=>{
-                    return (
-                        <li key={v.fruit + v.color}><b>{v.fruit}</b> : {v.color}</li>
-                    );
-                })}               
+                ].map((v , i)=>(
+                        <li key={v.fruit + i}><b>{i+1}.{v.fruit}</b> : {v.color}</li>
+                        )
+                    )
+                }               
             </ul>
             </>
         );
