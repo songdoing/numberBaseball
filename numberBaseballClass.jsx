@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import Try from './try';
 
-//get numbers without duplication
+// get 4 digit numbers without duplication
 function getNumbers() {
-
+    const candidate = [1,2,3,4,5,6,7,8,9];
+    const homerunArray = [];
+    for (let i =0 ; i < 4; i += 1) {
+        const chosen = candidate.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
+        homerunArray.push(chosen);
+    }
+    return homerunArray;
 };
 
 class NumberBaseball extends Component {
@@ -15,11 +21,60 @@ class NumberBaseball extends Component {
     };
 
     onSubmitForm = (e) => {
+        const {value, tries, answer} = this.state;
+        e.preventDefault();
+        if( value === answer.join('')) { //right answer
+            this.setState((prevState) => {
+                return {
+                    result : 'Home Run!',
+                    tries : [...prevState.tries, { try : value, result: 'Home Run!'}],
+                }
+            });
+            alert('Start again.');
+            this.setState({
+                value : '',
+                answer : getNumbers(),
+                tries : [],
+            });
+            
+        } else { //wrong answer
+            const answerArray =value.split('').map((v) => parseInt(v));
+            let strike = 0;
+            let ball = 0;
+            if (tries.length >= 9) { //over 10 times
+                this.setState({
+                    result : `Sorry. Game over. The answer was ${answer.join(',')}.`,
+                });
+                alert('Start again.');
+                this.setState({
+                    value : '',
+                    answer : getNumbers(),
+                    tries : [],
+                });
+            } else {
+                for (let i = 0; i < 4; i += 1) {
+                    if(answerArray[i] === answer[i]){
+                        strike += 1;
+                    } else if (answer.includes(answerArray[i])) {
+                        ball += 1;
+                    }
+                }
+                this.setState((prevState) => {
+                    return {
+                        tries : [...prevState.tries, { try : value, result : `${strike} Strike, ${ball} Ball`}],
+                        value : '',
+                    };
+                });
+            }
 
+        }
     };
     
     onChangeInput = (e) => {
-    
+        console.log(this.state.answer);
+        this.setState({
+            value : e.target.value,
+        });
     };
     
     input;
@@ -28,16 +83,8 @@ class NumberBaseball extends Component {
         this.input = c;
     };
 
-    fruits = [
-        { fruit : 'apple', color : 'red'},
-        { fruit : 'banana', color : 'yellow'},
-        { fruit : 'grape', color : 'purple'},
-        { fruit : 'watermelon', color : 'green'},
-        { fruit : 'mango', color : 'orange'},
-        { fruit : 'tomato', color : 'redish'},
-    ];
-
     render() {
+        
         return (
             <>
             <h1>Guess 4 digit numbers.</h1>
@@ -48,8 +95,8 @@ class NumberBaseball extends Component {
             </form>
             <div>TRY : {this.state.tries.length}</div>
             <ul>
-                {this.fruits.map((v , i)=>(
-                    <Try key={v.fruit + v.color} value={v} index={i} />
+                {this.state.tries.map((v , i)=>(
+                    <Try key={`TRY ${i + 1}. `} tryInfo = {v} />
                 ))}               
             </ul>
             </>
