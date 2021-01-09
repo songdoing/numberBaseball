@@ -84,18 +84,18 @@ class NumberBaseball extends Component {
     };
 
     render() {
-        
+        const { result, value, tries } = this.state;
         return (
             <>
             <h1>Guess 4 digit numbers.</h1>
-            <h2>{this.state.result}</h2>
+            <h2>{result}</h2>
             <form onSubmit={this.onSubmitForm}>
-                <input maxLength={4} ref={this.onRefInput} value={this.state.value} onChange={this.onChangeInput} />
+                <input maxLength={4} ref={this.onRefInput} value={value} onChange={this.onChangeInput} />
                 <button>ENTER</button>
             </form>
-            <div>TRY : {this.state.tries.length}</div>
+            <div>TRY : {tries.length}</div>
             <ul>
-                {this.state.tries.map((v , i)=>(
+                {tries.map((v , i)=>(
                     <Try key={`TRY ${i + 1}. `} tryInfo = {v} />
                 ))}               
             </ul>
