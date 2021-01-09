@@ -24,12 +24,12 @@ class NumberBaseball extends Component {
         const {value, tries, answer} = this.state;
         e.preventDefault();
         if( value === answer.join('')) { //right answer
-            this.setState((prevState) => {
+            this.setState((prevState) => { //밑에 setState랑 연달아 있고, prevState는 함수형으로 쓸것
                 return {
                     result : 'Home Run!',
                     tries : [...prevState.tries, { try : value, result: 'Home Run!'}],
                 }
-            });
+            }); //옛날 setState로 현재setState하는 경우에는 함수형으로..
             alert('Start again.');
             this.setState({
                 value : '',
