@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import Try from './tryFunc';
 
 // get 4 digit numbers without duplication
@@ -17,6 +17,7 @@ const NumberBaseball = () => {
     const [value, setValue] = useState('');
     const [answer, setAnswer] = useState(getNumbers());
     const [tries, setTries] = useState([]);
+    const inputEl = useRef(null);
 
     const onSubmitForm = (e) => {
         e.preventDefault();
@@ -30,7 +31,7 @@ const NumberBaseball = () => {
             setValue('');
             setAnswer(getNumbers());
             setTries([]);
-            
+            inputEl.current.focus();
         } else { //wrong answer
             const answerArray =value.split('').map((v) => parseInt(v));
             let strike = 0;
@@ -42,7 +43,7 @@ const NumberBaseball = () => {
                 setValue('');
                 setAnswer(getNumbers());
                 setTries([]);
-               
+                inputEl.current.focus();
             } else {
                 for (let i = 0; i < 4; i += 1) {
                     if(answerArray[i] === answer[i]){
@@ -53,6 +54,7 @@ const NumberBaseball = () => {
                 }
                 setTries((prevTries) => [...prevTries, { try : value, result : `${strike} Strike, ${ball} Ball`}] );
                 setValue('');
+                inputEl.current.focus();
             }
         }
     };
@@ -66,7 +68,7 @@ const NumberBaseball = () => {
             <h1>Guess 4 digit numbers.</h1>
             <h2>{result}</h2>
             <form onSubmit={onSubmitForm}>
-                <input maxLength={4} value={value} onChange={onChangeInput} />
+                <input ref={inputEl} maxLength={4} value={value} onChange={onChangeInput} />
                 <button>ENTER</button>
             </form>
             <div>TRY : {tries.length}</div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import Try from './try';
 
 // get 4 digit numbers without duplication
@@ -36,7 +36,7 @@ class NumberBaseball extends Component {
                 answer : getNumbers(),
                 tries : [],
             });
-            
+            this.inputRef.current.focus();
         } else { //wrong answer
             const answerArray =value.split('').map((v) => parseInt(v));
             let strike = 0;
@@ -51,6 +51,7 @@ class NumberBaseball extends Component {
                     answer : getNumbers(),
                     tries : [],
                 });
+                this.inputRef.current.focus();
             } else {
                 for (let i = 0; i < 4; i += 1) {
                     if(answerArray[i] === answer[i]){
@@ -65,6 +66,7 @@ class NumberBaseball extends Component {
                         value : '',
                     };
                 });
+                this.inputRef.current.focus();
             }
 
         }
@@ -77,12 +79,8 @@ class NumberBaseball extends Component {
         });
     };
     
-    input;
+    inputRef = createRef();
     
-    onRefInput = (c) => {
-        this.input = c;
-    };
-
     render() {
         const { result, value, tries } = this.state;
         return (
@@ -90,7 +88,7 @@ class NumberBaseball extends Component {
             <h1>Guess 4 digit numbers.</h1>
             <h2>{result}</h2>
             <form onSubmit={this.onSubmitForm}>
-                <input maxLength={4} ref={this.onRefInput} value={value} onChange={this.onChangeInput} />
+                <input maxLength={4} ref={this.inputRef} value={value} onChange={this.onChangeInput} />
                 <button>ENTER</button>
             </form>
             <div>TRY : {tries.length}</div>
